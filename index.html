@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <script src="./main.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <!--contaner of this forms-->
+    <div class="container__form">
+      <div class="container__loginimg">
+       <img src="./img/log-in-jpg.jpg" alt="" class="img__login">
+       <span class="text__site">Job Net</span>
+       <span class="description">
+       "اینجا پر از فریلنسره"
+       </span>
+       <!--the button the open the modal-->
+         <button class="singup" id="openModal"> ایجاد حساب کاربری </button>
+         <!--overlay-->
+           <div id="overlay" class="hidden"></div>
+          <!--modal-->
+          <div id="modal" class="hidden" role="dialog" arial-modal="true">
+               <form id="userForm">
+                 <input type="text" placeholder="نام:" id="nameInput">
+                 <input type="email" placeholder="پست الکترونیکی:" id="emailInput">
+                <button id="submitBtn" type="submit"> ثبت نام</button>
+                <button id="closeModal"> لغو</button>
+                <p id="errorMassage" class="hidden">لطفا اطلاعات را به صورت کامل پر کنید </p>
+               </form>
+          </div>
+
+
+
+
+
+
+
+    </div>
+
+</body>
+</html>
