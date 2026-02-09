@@ -20,7 +20,7 @@ body {
 .container__loginimg {
     display: flex;
     padding-right: 6rem;
-    width: 41rem;
+    width: 75rem;
     height: 50rem;
     border-radius: 10rem;
 }
@@ -35,7 +35,7 @@ img {
     padding-top: 17rem;
 }
 .text__site {
-    width: 38rem;
+    width: 39rem;
     padding-left: 2px;
     font-size: 10rem;
     margin: 1rem -19rem;
@@ -43,7 +43,7 @@ img {
 }
 .description {
     width: 16rem;
-    color: rgba(111, 13, 238, 0.89);
+    color: #4f18b6a1;
     padding-top: 17rem;
     font-size: 3.5rem;
     direction: rtl;
@@ -90,4 +90,71 @@ img {
 #errorMessage {
     color: red;
     margin-top: 10px;
+}
+li {
+    height: 7rem;
+    background-color: rgb(255 255 255);
+    border-radius: 9rem;
+    padding-top: 2rem;
+    font-family: 'vazir';
+    padding-right: 1rem;
+    margin-right: 3rem;
+    margin-top: 4rem;
+    border-color: #130533e0;
+    border: 10rem;
+}
+button {
+    font-family: 'vazir';
+    border-radius: 4rem;
+    display: block;
+    box-sizing: border-box;
+    width: 6rem;
+    margin: auto;
+    height: 3rem;
+    margin-top: 1rem;
+    font-size: 1.025;
+    text-align: center;
+}
+button:focus {
+    background-color: #521fc99d;
+    color: rgb(255, 255, 255);
+    animation-delay: 0.5s;
+    transition-delay: 1s;
+    border-radius: 2.5rem;
+    height: 4rem;
+    transition: all 0.5s;
+    transition: ease-in-out cubic-bezier(1, 0, 0, 1);
+}
+button:hover {
+    background-color: #521fc99d;
+    color: rgb(255, 255, 255);
+    animation-delay: 0.5s;
+    transition-delay: 1s;
+    border-radius: 2.5rem;
+    height: 4rem;
+    transition: all 0.5s;
+    transition: ease-in-out cubic-bezier(1, 0, 0, 1);
+}
+#closeModal:hover {
+    background-color: #521fc95e;
+    color: rgb(238, 4, 4);
+    animation-delay: 0.5s;
+    transition-delay: 1s;
+    border-radius: 2.5rem;
+    height: 4rem;
+    transition: all 0.5s;
+    transition: ease-in-out cubic-bezier(1, 0, 0, 1);
+}
+input {
+    display: block;
+    font-family: 'vazir';
+    height: 2.5rem;
+    width: 12rem;
+    border-radius: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+form {
+    width: 13rem;
+    height: 16rem;
 }
