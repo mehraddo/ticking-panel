@@ -25,8 +25,17 @@
           <!--modal-->
           <div id="modal" class="hidden" role="dialog" arial-modal="true">
                <form id="userForm">
-                 <input type="text" placeholder="نام:" id="nameInput">
+                 <input type="text" placeholder="نام:" id="nameInput" maxlength="50">
+                 <input type="text" id="lastName" maxlength="50"  placeholder="نام خانوادگی">
                  <input type="email" placeholder="پست الکترونیکی:" id="emailInput">
+                 <input type="password" id="password"  placeholder="رمز عبور">
+                 <input type="date" id="dateofbrith" >
+                 <p>کشور خود را انتخاب کنید :</p>
+                 <select id="country">
+                  <option></option>
+                 </select>
+                 <p>پروفایل:</p>
+                <input type="file" id="profilePhoto" accept=".jpg,.jpeg,.png" placeholder="پروفایل جاب نت">
                 <button id="submitBtn" type="submit"> ثبت نام</button>
                 <button id="closeModal"> لغو</button>
                 <p id="errorMassage" class="hidden">لطفا اطلاعات را به صورت کامل پر کنید </p>
