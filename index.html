@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+   <script src="https://unpkg.com/zxcvbn@4.4.2/dist/zxcvbn.js"></script>
+    <script src="./main.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
-    <script src="./main.js" defer></script>
-    <title>Document</title>
+    <title>job net</title>
 </head>
 <body>
 
@@ -24,10 +25,10 @@
            <div id="overlay" class="hidden"></div>
           <!--modal-->
           <div id="modal" class="hidden" role="dialog" arial-modal="true">
-               <form id="userForm">
+               <form id="userForm" novalidate>
                  <input type="text" placeholder="نام:" id="nameInput" maxlength="50">
                  <input type="text" id="lastName" maxlength="50"  placeholder="نام خانوادگی">
-                 <input type="email" placeholder="پست الکترونیکی:" id="emailInput">
+                 <input type="email" placeholder="پست الکترونیکی:" id="emailInput" required>
                  <input type="password" id="password"  placeholder="رمز عبور">
                  <input type="date" id="dateofbrith" >
                  <p>کشور خود را انتخاب کنید :</p>
@@ -40,6 +41,7 @@
                 <button id="closeModal"> لغو</button>
                 <p id="errorMassage" class="hidden">لطفا اطلاعات را به صورت کامل پر کنید </p>
                </form>
+
           </div>
           <!--user modal list-->
           <ul id="userList"></ul>
