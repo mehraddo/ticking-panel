@@ -1,8 +1,5 @@
-let users = [];
-const saved = localStorage.getItem('users');
-if (saved) {
-    users = JSON.parse(saved);
-}
+console.log('ts chek');
+let users = JSON.parse(localStorage.getItem('users') || '[]');
 const userList = document.getElementById('userList');
 const openBtn = document.getElementById('openModal');
 const closeBtn = document.getElementById('closeModal');
@@ -20,6 +17,15 @@ const photoInput = document.getElementById('profilePhoto');
 function isEnglishName(value) {
     return /^[A-Za-z]+$/.test(value);
 }
+function isAdult(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    return age >= 18 && birthDate < today;
+}
+function saveUsers() {
+    localStorage.setItem('users', JSON.stringify(users));
+}
 function openModal() {
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
@@ -33,101 +39,58 @@ closeBtn.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 function renderUsers() {
     userList.innerHTML = '';
-    users.forEach(function (user, index) {
+    users.forEach((user, index) => {
         const li = document.createElement('li');
         li.innerHTML = `
-            ${user.nameInput} ${user.lastName} - ${user.email}
-            <button class="delete-btn" data-index="${index}">
-                حذف
-            </button>`;
+      ${user.nameInput} ${user.lastName} - ${user.email}
+      <button class="delete-btn" data-index="${index}">حذف</button>
+    `;
         userList.appendChild(li);
     });
-    localStorage.setItem('users', JSON.stringify(users));
+    saveUsers();
 }
-if (
-    !form ||
-    !nameInput ||
-    !lastNameInput ||
-    !emailInput ||
-    !passwordInput ||
-    !dobInput ||
-    !countryInput ||
-    !photoInput
-) {
-    console.error('فرم المنت پیدا نشد ');
-} else {
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const data = {
-            nameInput: nameInput.value,
-            lastName: lastNameInput.value,
-            email: emailInput.value,
-            password: passwordInput.value,
-            dob: dobInput.value,
-            country: countryInput.value,
-            photo: photoInput.files[0],
-        };
-        console.log(data);
-    });
-}
-form.addEventListener('submit', function (event) {
+form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const nameValue = nameInput.value.trim();
-    const emailValue = emailInput.value.trim();
-    if (!nameValue || !emailValue) {
+    if (!nameInput.value || !emailInput.value) {
         errorMessage.classList.remove('hidden');
-        alert('برای ثبت نام لازمه که پر کنی :)');
+        alert('فرم ناقصه');
         return;
     }
     if (!isEnglishName(nameInput.value)) {
-        alert('نام خود را "انگلیسی وارد کنید"');
+        alert('نام باید انگلیسی باشد');
         return;
     }
     if (!isEnglishName(lastNameInput.value)) {
-        alert('نام خانوادگی را انگلیسی پر کنید');
+        alert('نام خانوادگی انگلیسی باشد');
         return;
-    }
-    if (!emailInput.checkValidity()) {
-        alert('جدی باهام ؟ فرمت ایمیل درست نیست مشتی');
-        return;
-    }
-    function isAdult(dateString) {
-        const today = new Date();
-        const birthDate = new Date(dateString);
-        const age = today.getFullYear() - birthDate.getFullYear();
-        return age >= 18 && birthDate < today;
     }
     if (!isAdult(dobInput.value)) {
-        alert('   سنت زیر 18 ساله جوجو نمیتونم ثبت نامت کنم :) ');
+        alert('سن باید بالای 18 باشد');
         return;
     }
     if (passwordInput.value.length < 8) {
-        alert('رمز عبور باید 8 کارتر باشه به بالا :(');
+        alert('رمز حداقل 8 کاراکتر باشد');
         return;
     }
     const result = zxcvbn(passwordInput.value);
     if (result.score < 2) {
-        alert('رمز عبورت زیادی ضعیفه');
+        alert('رمز ضعیفه');
         return;
     }
-    const photoInput = document.getElementById('profilePhoto');
     let profilePhoto = 'no-photo';
-    if (photoInput.files.length > 0) {
+    if (photoInput.files && photoInput.files.length > 0) {
         const file = photoInput.files[0];
-
         const allowedTypes = ['image/jpeg', 'image/png'];
-
         if (!allowedTypes.includes(file.type)) {
             alert('فرمت عکس معتبر نیست');
             return;
         }
         if (file.size > 80 * 1024) {
-            alert('فرمت 80 کیلوبایت الرت داد ؟');
+            alert('حجم عکس زیاد است');
             return;
         }
         profilePhoto = file;
     }
-    errorMessage.classList.add('hidden');
     const user = {
         nameInput: nameInput.value,
         lastName: lastNameInput.value,
@@ -135,40 +98,23 @@ form.addEventListener('submit', function (event) {
         password: passwordInput.value,
         dob: dobInput.value,
         country: countryInput.value,
-        profilePhoto: photoInput.files[0] || 'no-photo',
+        profilePhoto: profilePhoto,
     };
     users.push(user);
     renderUsers();
     form.reset();
-    nameInput.value = '';
-    emailInput.value = '';
-    photoInput.value = '';
     closeModal();
 });
-userList.addEventListener('click', function (e) {
+userList.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-btn')) {
-        const index = e.target.getAttribute('data-index');
+        const index = Number(e.target.getAttribute('data-index'));
         users.splice(index, 1);
-        saveUsers();
         renderUsers();
     }
 });
-function saveUsers() {
-    localStorage.setItem('users', JSON.stringify(users));
-}
-function deleteUser(index) {
-    users.splice(index, 1);
-
-    localStorage.setItem('users', JSON.stringify(users));
-
-    renderUsers();
-}
-renderUsers();
 async function loadCountries() {
     try {
-        const response = await fetch(
-            'https://restcountries.com/v3.1/all?fields=name',
-        );
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
         const countries = await response.json();
         countryInput.innerHTML = '';
         countries.forEach((country) => {
@@ -177,8 +123,10 @@ async function loadCountries() {
             option.textContent = country.name.common;
             countryInput.appendChild(option);
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Country API error:', error);
     }
 }
+renderUsers();
 loadCountries();
