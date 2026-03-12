@@ -1,5 +1,8 @@
-console.log('ts chek');
+// TypeScript check
+console.log('ts check');
+// Initialize user array
 let users = JSON.parse(localStorage.getItem('users') || '[]');
+// Get DOM elements
 const userList = document.getElementById('userList');
 const openBtn = document.getElementById('openModal');
 const closeBtn = document.getElementById('closeModal');
@@ -8,103 +11,127 @@ const overlay = document.getElementById('overlay');
 const form = document.getElementById('userForm');
 const errorMessage = document.getElementById('errorMassage');
 const emailInput = document.getElementById('emailInput');
-const nameInput = document.getElementById('nameInput');
+const firstnameInput = document.getElementById('firstnameInput');
 const lastNameInput = document.getElementById('lastName');
 const passwordInput = document.getElementById('password');
-const dobInput = document.getElementById('dateofbrith');
+const birthday = document.getElementById('dateofbrith');
 const countryInput = document.getElementById('country');
 const photoInput = document.getElementById('profilePhoto');
+// Function to check if a string is English
 function isEnglishName(value) {
     return /^[A-Za-z]+$/.test(value);
 }
+// Function to check if a person is 18 years old or older
 function isAdult(dateString) {
     const today = new Date();
     const birthDate = new Date(dateString);
     const age = today.getFullYear() - birthDate.getFullYear();
     return age >= 18 && birthDate < today;
 }
+// Function to save users to localStorage
 function saveUsers() {
     localStorage.setItem('users', JSON.stringify(users));
 }
+// Function to open modal
 function openModal() {
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
+// Function to close modal
 function closeModal() {
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
 }
+// Add event listeners
 openBtn.addEventListener('click', openModal);
 closeBtn.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
+// Function to render users
 function renderUsers() {
     userList.innerHTML = '';
     users.forEach((user, index) => {
         const li = document.createElement('li');
         li.innerHTML = `
-      ${user.nameInput} ${user.lastName} - ${user.email}
-      <button class="delete-btn" data-index="${index}">حذف</button>
+      ${user.firstnameInput} ${user.lastName} - ${user.email}
+      <button class="delete-btn" data-index="${index}">Delete</button>
     `;
         userList.appendChild(li);
     });
     saveUsers();
 }
+// Function to validate email
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+// Form submission handler
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (!nameInput.value || !emailInput.value) {
+    // Validate form inputs
+    if (!firstnameInput.value || !emailInput.value) {
         errorMessage.classList.remove('hidden');
-        alert('فرم ناقصه');
+        alert('تمام فیلدا رو باید پر کنید');
         return;
     }
-    if (!isEnglishName(nameInput.value)) {
-        alert('نام باید انگلیسی باشد');
+    if (!isEnglishName(firstnameInput.value)) {
+        alert('نام رو انگلیسی وارد کن مشتی ');
         return;
     }
     if (!isEnglishName(lastNameInput.value)) {
-        alert('نام خانوادگی انگلیسی باشد');
+        alert('نام خانوادگی انگلیسی باید پر کنی ');
         return;
     }
-    if (!isAdult(dobInput.value)) {
-        alert('سن باید بالای 18 باشد');
+    if (!isAdult(birthday.value)) {
+        alert('زیر 18 ثبت نام نداریم:(');
         return;
     }
     if (passwordInput.value.length < 8) {
-        alert('رمز حداقل 8 کاراکتر باشد');
+        alert('پسورد باید بالا تر از 8 کارکتر باشه');
         return;
     }
+    if (!isValidEmail(emailInput.value)) {
+        alert('ایمیلیت معتبر نیست');
+        return;
+    }
+    // Password strength check
     const result = zxcvbn(passwordInput.value);
     if (result.score < 2) {
-        alert('رمز ضعیفه');
+        alert('پسوردت ضعیفههه:(');
         return;
     }
+    // Process profile photo
     let profilePhoto = 'no-photo';
     if (photoInput.files && photoInput.files.length > 0) {
         const file = photoInput.files[0];
         const allowedTypes = ['image/jpeg', 'image/png'];
         if (!allowedTypes.includes(file.type)) {
-            alert('فرمت عکس معتبر نیست');
+            alert('فرمت عکس معتبر نیست.');
             return;
         }
         if (file.size > 80 * 1024) {
-            alert('حجم عکس زیاد است');
+            alert('سایز عکست زیاده resize کن:(');
             return;
         }
         profilePhoto = file;
     }
+    // Create user object
     const user = {
-        nameInput: nameInput.value,
+        firstnameInput: firstnameInput.value,
         lastName: lastNameInput.value,
         email: emailInput.value,
         password: passwordInput.value,
-        dob: dobInput.value,
+        birthday: birthday.value,
         country: countryInput.value,
         profilePhoto: profilePhoto,
     };
+    // Add user to array and render
     users.push(user);
     renderUsers();
+    // Reset form and close modal
     form.reset();
     closeModal();
 });
+// User list click handler
 userList.addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-btn')) {
         const index = Number(e.target.getAttribute('data-index'));
@@ -112,6 +139,7 @@ userList.addEventListener('click', (e) => {
         renderUsers();
     }
 });
+// Function to load countries
 async function loadCountries() {
     try {
         const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
@@ -128,5 +156,6 @@ async function loadCountries() {
         console.error('Country API error:', error);
     }
 }
+// Initialize app
 renderUsers();
 loadCountries();
