@@ -57,7 +57,7 @@ function renderUsers() {
         const li = document.createElement('li');
         li.innerHTML = `
       ${user.firstnameInput} ${user.lastName} - ${user.email}
-      <button class="delete-btn" data-index="${index}">Delete</button>
+      <button class="delete-btn" data-index="${index}">حذف</button>
     `;
         userList.appendChild(li);
     });
