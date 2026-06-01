@@ -53,7 +53,7 @@ function renderUsers() {
         const li = document.createElement('li');
         li.innerHTML = `
       ${user.firstnameInput} ${user.lastName} - ${user.email}
-      <button class="delete-btn" data-index="${index}">Delete</button>
+      <button class="delete-btn" data-index="${index}">حذف</button>
     `;
         userList.appendChild(li);
     });
@@ -144,6 +144,7 @@ async function loadCountries() {
     try {
         const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
         const countries = await response.json();
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
         countryInput.innerHTML = '';
         countries.forEach((country) => {
             const option = document.createElement('option');
@@ -154,6 +155,27 @@ async function loadCountries() {
     }
     catch (error) {
         console.error('Country API error:', error);
+        const fallbackCountries = [
+            'Afghanistan',
+            'Australia',
+            'Brazil',
+            'Canada',
+            'France',
+            'Germany',
+            'India',
+            'Iran',
+            'Japan',
+            'Turkey',
+            'United Kingdom',
+            'United States',
+        ];
+        fallbackCountries.sort();
+        fallbackCountries.forEach((country) => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            countryInput.appendChild(option);
+        });
     }
 }
 // Initialize app

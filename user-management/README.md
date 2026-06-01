@@ -1,81 +1,126 @@
-
 # 🚀 User Management Dashboard
 
-A simple app for registering, displaying, and deleting users. All data is stored in `localStorage`. The form validates:
+A TypeScript-based user management application that allows users to register, view, and delete accounts. User data is stored in `localStorage`, and the registration form includes multiple validation checks to ensure data integrity.
 
-- English-only names
-- Age ≥ 18
-- Strong password (using zxcvbn)
-- Valid email
-- Country list loaded from the restcountries API
+## ✨ Features
+
+* User registration form
+* User list display
+* User deletion
+* LocalStorage persistence
+* English-only name validation
+* Email format validation
+* Age verification (18+)
+* Password strength validation using zxcvbn
+* Profile photo validation
+* Dynamic country list loaded from the REST Countries API
+* Alphabetically sorted country dropdown
+
+---
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
 
-- Node.js ≥ 18
-- npm (or yarn)
-- TypeScript (global install)
+* Node.js 18+
+* npm
+* TypeScript
+
+Install TypeScript globally:
 
 ```bash
-npm i -g typescript
+npm install -g typescript
 ```
 
-### Steps
+### Clone the Repository
 
-1. **Clone the repo:**
+```bash
+git clone https://github.com/mehraddo/ticking-panel.git
+cd ticking-panel
+```
 
-   ```bash
-   git clone https://github.com/mehraddo/ticking-panel
-   cd user-management
-   ```
+### Install Dependencies
 
-2. **Install dependencies:**
+```bash
+npm install
+```
 
-   ```bash
-   npm install
-   ```
+### Compile TypeScript
 
-3. **Compile TypeScript:**
+```bash
+npx tsc
+```
 
-   ```bash
-   npx tsc  # Output in dist/main.js
-   ```
+### Run the Project
 
-4. **Serve the app:** (using any simple static server like `http-server`)
+Using a simple static server:
 
-   ```bash
-   npx http-server dist  # Opens in http://localhost:8080
-   ```
+```bash
+npx http-server .
+```
+
+Open your browser and visit:
+
+```text
+http://localhost:8080
+```
 
 ---
 
 ## 💡 Usage
 
-- **Add a user:** Click **ایجاد حساب کاربری**, fill the form, and click **ثبت نام**.
-- **Delete a user:** Click the **حذف** button next to the user in the list.
-- **Countries:** Loaded automatically from the API.
+### Add a User
+
+1. Click the **Create Account** button.
+2. Fill in all required fields.
+3. Submit the form.
+
+### Delete a User
+
+Click the **Delete** button next to any user in the list.
+
+### Country Selection
+
+The country list is loaded automatically from the REST Countries API and displayed in alphabetical order.
 
 ---
 
 ## 📂 Project Structure
 
-user-management/
-├─ dist/               # Compiled JavaScript files
-├─ img/                #log-in-jpg
-├─ dist/               # Compiled JavaScript files
-├─ index.html
-├─ style.css
-├─ package.json
-├─ tsconfig.json
-└─ README.md
+```text
+ticking-panel/
+├── dist/
+├── img/
+├── src/
+├── index.html
+├── style.css
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
-This project is licensed under the MIT License – see the `LICENSE` file for details.
+---
+
+## 🛠 Technologies Used
+
+* TypeScript
+* JavaScript
+* HTML5
+* CSS3
+* LocalStorage API
+* REST Countries API
+* zxcvbn
 
 ---
 
 ## 📞 Contact
 
-- **GitHub:** [mehraddo](https://github.com/mehraddo)
+GitHub: https://github.com/mehraddo
 
-- **Email:** [mhraddo@gmail.com]
+Email: [mhraddo@gmail.com](mailto:mhraddo@gmail.com)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

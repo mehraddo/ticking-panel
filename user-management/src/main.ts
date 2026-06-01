@@ -149,16 +149,47 @@ async function loadCountries(): Promise<void> {
         const response: Response = await fetch(
             'https://restcountries.com/v3.1/all?fields=name',
         );
-        const countries: {name: {common: string}}[] = await response.json();
+
+        const countries = await response.json();
+
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
         countryInput.innerHTML = '';
+
         countries.forEach((country) => {
-            const option: HTMLOptionElement = document.createElement('option');
+            const option = document.createElement('option');
             option.value = country.name.common;
             option.textContent = country.name.common;
+
             countryInput.appendChild(option);
         });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Country API error:', error);
+
+        const fallbackCountries = [
+            'Afghanistan',
+            'Australia',
+            'Brazil',
+            'Canada',
+            'France',
+            'Germany',
+            'India',
+            'Iran',
+            'Japan',
+            'Turkey',
+            'United Kingdom',
+            'United States',
+        ];
+
+        fallbackCountries.sort();
+
+        fallbackCountries.forEach((country) => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+
+            countryInput.appendChild(option);
+        });
     }
 }
 // Initialize app
